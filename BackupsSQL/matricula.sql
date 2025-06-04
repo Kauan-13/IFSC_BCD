@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 9.3.0, for Linux (x86_64)
 --
--- Host: localhost    Database: Matricula
+-- Host: localhost    Database: matricula
 -- ------------------------------------------------------
 -- Server version	9.3.0
 
@@ -54,7 +54,9 @@ CREATE TABLE `Disciplina` (
   `SIAPE` varchar(7) NOT NULL,
   PRIMARY KEY (`Cod`),
   KEY `SIAPE` (`SIAPE`),
-  CONSTRAINT `Disciplina_ibfk_1` FOREIGN KEY (`SIAPE`) REFERENCES `Professor` (`SIAPE`)
+  CONSTRAINT `Disciplina_ibfk_1` FOREIGN KEY (`SIAPE`) REFERENCES `Professor` (`SIAPE`),
+  CONSTRAINT `Disciplina_chk_1` CHECK ((`Semestre` < 6)),
+  CONSTRAINT `Disciplina_chk_2` CHECK ((`CargaHoraria` > 0))
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -80,7 +82,8 @@ CREATE TABLE `PreRequisito` (
   PRIMARY KEY (`Cod`,`PreRequisitoCod`),
   KEY `PreRequisitoCod` (`PreRequisitoCod`),
   CONSTRAINT `PreRequisito_ibfk_1` FOREIGN KEY (`Cod`) REFERENCES `Disciplina` (`Cod`),
-  CONSTRAINT `PreRequisito_ibfk_2` FOREIGN KEY (`PreRequisitoCod`) REFERENCES `Disciplina` (`Cod`)
+  CONSTRAINT `PreRequisito_ibfk_2` FOREIGN KEY (`PreRequisitoCod`) REFERENCES `Disciplina` (`Cod`),
+  CONSTRAINT `PreRequisito_chk_1` CHECK ((`PreRequisitoCod` <> `Cod`))
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -114,6 +117,7 @@ CREATE TABLE `Professor` (
 
 LOCK TABLES `Professor` WRITE;
 /*!40000 ALTER TABLE `Professor` DISABLE KEYS */;
+INSERT INTO `Professor` VALUES ('2015-03-10','1001','Maria Luz'),('2012-07-01','1002','Carlos Eduardo Silva'),('2018-11-23','1003','Fernanda Costa'),('2014-05-15','1004','Joao Pedro Almeida'),('2016-09-30','1005','Mariana Goncalves');
 /*!40000 ALTER TABLE `Professor` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -131,7 +135,8 @@ CREATE TABLE `faz` (
   PRIMARY KEY (`matricula`,`Cod`),
   KEY `Cod` (`Cod`),
   CONSTRAINT `faz_ibfk_1` FOREIGN KEY (`matricula`) REFERENCES `Aluno` (`matricula`),
-  CONSTRAINT `faz_ibfk_2` FOREIGN KEY (`Cod`) REFERENCES `Disciplina` (`Cod`)
+  CONSTRAINT `faz_ibfk_2` FOREIGN KEY (`Cod`) REFERENCES `Disciplina` (`Cod`),
+  CONSTRAINT `faz_chk_1` CHECK (((`Estado` = _latin1'Cursando') or (`Estado` = _latin1'Concluido') or (`Estado` = _latin1'Trancado') or (`Estado` = _latin1'Reprovado')))
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -153,4 +158,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-05-23  0:46:38
+-- Dump completed on 2025-06-04  1:17:06
