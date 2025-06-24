@@ -36,6 +36,7 @@ CREATE TABLE `Aluno` (
 
 LOCK TABLES `Aluno` WRITE;
 /*!40000 ALTER TABLE `Aluno` DISABLE KEYS */;
+INSERT INTO `Aluno` VALUES ('kauan@gmail.com','Kauan Oliveira Freitas',123456789);
 /*!40000 ALTER TABLE `Aluno` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -66,59 +67,8 @@ CREATE TABLE `Disciplina` (
 
 LOCK TABLES `Disciplina` WRITE;
 /*!40000 ALTER TABLE `Disciplina` DISABLE KEYS */;
+INSERT INTO `Disciplina` VALUES (60,101,1,'Matemtica I','1001'),(80,102,1,'Introduo  Programao','1002'),(60,103,1,'Fsica I','1003'),(80,201,2,'Algoritmos','1002'),(80,202,2,'Estruturas de Dados','1004'),(60,203,2,'Matemtica II','1001'),(80,301,3,'Banco de Dados','1005'),(60,302,3,'Redes de Computadores','1003'),(80,303,3,'Sistemas Operacionais','1004'),(80,401,4,'Programao Orientada a Objetos','1002'),(60,402,4,'Engenharia de Software','1005'),(60,403,4,'Segurana da Informao','1003'),(60,501,5,'Inteligncia Artificial','1001'),(80,502,5,'Computao em Nuvem','1005'),(80,503,5,'Projeto de Sistemas','1004');
 /*!40000 ALTER TABLE `Disciplina` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `PreRequisito`
---
-
-DROP TABLE IF EXISTS `PreRequisito`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `PreRequisito` (
-  `Cod` int NOT NULL,
-  `PreRequisitoCod` int NOT NULL,
-  PRIMARY KEY (`Cod`,`PreRequisitoCod`),
-  KEY `PreRequisitoCod` (`PreRequisitoCod`),
-  CONSTRAINT `PreRequisito_ibfk_1` FOREIGN KEY (`Cod`) REFERENCES `Disciplina` (`Cod`),
-  CONSTRAINT `PreRequisito_ibfk_2` FOREIGN KEY (`PreRequisitoCod`) REFERENCES `Disciplina` (`Cod`),
-  CONSTRAINT `PreRequisito_chk_1` CHECK ((`PreRequisitoCod` <> `Cod`))
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `PreRequisito`
---
-
-LOCK TABLES `PreRequisito` WRITE;
-/*!40000 ALTER TABLE `PreRequisito` DISABLE KEYS */;
-/*!40000 ALTER TABLE `PreRequisito` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `Professor`
---
-
-DROP TABLE IF EXISTS `Professor`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `Professor` (
-  `TempoDeCasa` date NOT NULL,
-  `SIAPE` varchar(7) NOT NULL,
-  `Nome` varchar(100) NOT NULL,
-  PRIMARY KEY (`SIAPE`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `Professor`
---
-
-LOCK TABLES `Professor` WRITE;
-/*!40000 ALTER TABLE `Professor` DISABLE KEYS */;
-INSERT INTO `Professor` VALUES ('2015-03-10','1001','Maria Luz'),('2012-07-01','1002','Carlos Eduardo Silva'),('2018-11-23','1003','Fernanda Costa'),('2014-05-15','1004','Joao Pedro Almeida'),('2016-09-30','1005','Mariana Goncalves');
-/*!40000 ALTER TABLE `Professor` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -146,7 +96,61 @@ CREATE TABLE `faz` (
 
 LOCK TABLES `faz` WRITE;
 /*!40000 ALTER TABLE `faz` DISABLE KEYS */;
+INSERT INTO `faz` VALUES ('Concluido',123456789,101),('Concluido',123456789,102),('Concluido',123456789,103),('Concluido',123456789,201),('Cursando',123456789,202),('Cursando',123456789,203),('Trancado',123456789,301),('Cursando',123456789,302);
 /*!40000 ALTER TABLE `faz` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `PreRequisito`
+--
+
+DROP TABLE IF EXISTS `PreRequisito`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `PreRequisito` (
+  `Cod` int NOT NULL,
+  `PreRequisitoCod` int NOT NULL,
+  PRIMARY KEY (`Cod`,`PreRequisitoCod`),
+  KEY `PreRequisitoCod` (`PreRequisitoCod`),
+  CONSTRAINT `PreRequisito_ibfk_1` FOREIGN KEY (`Cod`) REFERENCES `Disciplina` (`Cod`),
+  CONSTRAINT `PreRequisito_ibfk_2` FOREIGN KEY (`PreRequisitoCod`) REFERENCES `Disciplina` (`Cod`),
+  CONSTRAINT `PreRequisito_chk_1` CHECK ((`PreRequisitoCod` <> `Cod`))
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `PreRequisito`
+--
+
+LOCK TABLES `PreRequisito` WRITE;
+/*!40000 ALTER TABLE `PreRequisito` DISABLE KEYS */;
+INSERT INTO `PreRequisito` VALUES (203,101),(201,102),(302,103),(401,201),(301,202),(303,202),(401,203),(501,203),(502,302),(403,303),(503,303),(501,402),(503,402);
+/*!40000 ALTER TABLE `PreRequisito` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `Professor`
+--
+
+DROP TABLE IF EXISTS `Professor`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `Professor` (
+  `TempoDeCasa` date NOT NULL,
+  `SIAPE` varchar(7) NOT NULL,
+  `Nome` varchar(100) NOT NULL,
+  PRIMARY KEY (`SIAPE`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `Professor`
+--
+
+LOCK TABLES `Professor` WRITE;
+/*!40000 ALTER TABLE `Professor` DISABLE KEYS */;
+INSERT INTO `Professor` VALUES ('2015-03-10','1001','Maria Luz'),('2012-07-01','1002','Carlos Eduardo Silva'),('2018-11-23','1003','Fernanda Costa'),('2014-05-15','1004','Joao Pedro Almeida'),('2016-09-30','1005','Mariana Goncalves');
+/*!40000 ALTER TABLE `Professor` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -158,4 +162,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-06-04  1:17:06
+-- Dump completed on 2025-06-24  4:47:34

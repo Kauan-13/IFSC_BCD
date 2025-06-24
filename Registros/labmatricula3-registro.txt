@@ -1,0 +1,781 @@
+mysql> INSERT INTO Disciplina (Cod, Nome, Semestre, CargaHoraria, SIAPE) VALUES
+    -> (101, 'Matemtica I', 1, 60, 1001),
+    -> (102, 'Introduo  Programao', 1, 80, 1002),
+    -> (103, 'Fsica I', 1, 60, 1003),
+    -> (201, 'Algoritmos', 2, 80, 1002),
+    -> (202, 'Estruturas de Dados', 2, 80, 1004),
+    -> (203, 'Matemtica II', 2, 60, 1001),
+    -> (301, 'Banco de Dados', 3, 80, 1005),
+    -> (302, 'Redes de Computadores', 3, 60, 1003),
+    -> (303, 'Sistemas Operacionais', 3, 80, 1004),
+    -> (401, 'Programao Orientada a Objetos', 4, 80, 1002),
+    -> (402, 'Engenharia de Software', 4, 60, 1005),
+    -> (403, 'Segurana da Informao', 4, 60, 1003),
+    -> (501, 'Inteligncia Artificial', 5, 60, 1001),
+    -> (502, 'Computao em Nuvem', 5, 80, 1005),
+    -> (503, 'Projeto de Sistemas', 5, 80, 1004);
+Query OK, 15 rows affected (0.003 sec)
+Records: 15  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM Disciplina;
++--------------+-----+----------+-------------------------------+-------+
+| CargaHoraria | Cod | Semestre | Nome                          | SIAPE |
++--------------+-----+----------+-------------------------------+-------+
+|           60 | 101 |        1 | Matemtica I                   | 1001  |
+|           80 | 102 |        1 | Introduo  Programao           | 1002  |
+|           60 | 103 |        1 | Fsica I                       | 1003  |
+|           80 | 201 |        2 | Algoritmos                    | 1002  |
+|           80 | 202 |        2 | Estruturas de Dados           | 1004  |
+|           60 | 203 |        2 | Matemtica II                  | 1001  |
+|           80 | 301 |        3 | Banco de Dados                | 1005  |
+|           60 | 302 |        3 | Redes de Computadores         | 1003  |
+|           80 | 303 |        3 | Sistemas Operacionais         | 1004  |
+|           80 | 401 |        4 | Programao Orientada a Objetos | 1002  |
+|           60 | 402 |        4 | Engenharia de Software        | 1005  |
+|           60 | 403 |        4 | Segurana da Informao          | 1003  |
+|           60 | 501 |        5 | Inteligncia Artificial        | 1001  |
+|           80 | 502 |        5 | Computao em Nuvem             | 1005  |
+|           80 | 503 |        5 | Projeto de Sistemas           | 1004  |
++--------------+-----+----------+-------------------------------+-------+
+15 rows in set (0.000 sec)
+
+mysql> INSERT INTO PreRequisito (CodDisciplina, CodPreRequisito) VALUES
+    -> (201, 102),
+    -> (203, 101),
+    -> (301, 202),
+    -> (302, 103),
+    -> (303, 202),
+    -> (401, 201),
+    -> (401, 203),
+    -> (403, 303),
+    -> (501, 203),
+    -> (501, 402),
+    -> (502, 302),
+    -> (503, 402),
+    -> (503, 303);
+ERROR 1054 (42S22): Unknown column 'CodDisciplina' in 'field list'
+mysql> DESC PreRequisito
+    -> ;
++-----------------+------+------+-----+---------+-------+
+| Field           | Type | Null | Key | Default | Extra |
++-----------------+------+------+-----+---------+-------+
+| Cod             | int  | NO   | PRI | NULL    |       |
+| PreRequisitoCod | int  | NO   | PRI | NULL    |       |
++-----------------+------+------+-----+---------+-------+
+2 rows in set (0.001 sec)
+
+mysql> INSERT INTO PreRequisito (Cod, PreRequisitoCod) VALUES
+    -> (201, 102),
+    -> (203, 101),
+    -> (301, 202),
+    -> (302, 103),
+    -> (303, 202),
+    -> (401, 201),
+    -> (401, 203),
+    -> (403, 303),
+    -> (501, 203),
+    -> (501, 402),
+    -> (502, 302),
+    -> (503, 402),
+    -> (503, 303);
+Query OK, 13 rows affected (0.003 sec)
+Records: 13  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM PreRequisito;
++-----+-----------------+
+| Cod | PreRequisitoCod |
++-----+-----------------+
+| 203 |             101 |
+| 201 |             102 |
+| 302 |             103 |
+| 401 |             201 |
+| 301 |             202 |
+| 303 |             202 |
+| 401 |             203 |
+| 501 |             203 |
+| 502 |             302 |
+| 403 |             303 |
+| 503 |             303 |
+| 501 |             402 |
+| 503 |             402 |
++-----+-----------------+
+13 rows in set (0.000 sec)
+
+mysql> DESC Aluno;
++-----------+--------------+------+-----+---------+-------+
+| Field     | Type         | Null | Key | Default | Extra |
++-----------+--------------+------+-----+---------+-------+
+| email     | varchar(100) | YES  |     | NULL    |       |
+| nome      | varchar(100) | NO   |     | NULL    |       |
+| matricula | int          | NO   | PRI | NULL    |       |
++-----------+--------------+------+-----+---------+-------+
+3 rows in set (0.001 sec)
+
+mysql> INSERT INTO Aluno (matricula, nome, email) VALUES (123456789, 'Kauan Oliveira Freitas', 'kauan@gmail.com');
+Query OK, 1 row affected (0.003 sec)
+
+mysql> SELECT * FROM Aluno;
++-----------------+------------------------+-----------+
+| email           | nome                   | matricula |
++-----------------+------------------------+-----------+
+| kauan@gmail.com | Kauan Oliveira Freitas | 123456789 |
++-----------------+------------------------+-----------+
+1 row in set (0.000 sec)
+
+mysql> DESC faz
+    -> ;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| Estado    | varchar(10) | NO   |     | NULL    |       |
+| matricula | int         | NO   | PRI | NULL    |       |
+| Cod       | int         | NO   | PRI | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+3 rows in set (0.001 sec)
+
+mysql> INSERT INTO Faz (Cod, matricula, Estado) VALUES
+    -> (101, 123456789, 'Concludo'),
+    -> (102, 123456789, 'Concludo'),
+    -> (103, 123456789, 'Concludo'),
+    -> (201, 123456789, 'Concludo'),
+    -> (202, 123456789, 'Cursando'),
+    -> (203, 123456789, 'Cursando'),
+    -> (301, 123456789, 'Trancado'),
+    -> (302, 123456789, 'Cursando');
+ERROR 3819 (HY000): Check constraint 'faz_chk_1' is violated.
+mysql> SHOW CREATE TABLE faz;
++-------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Table | Create Table                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
++-------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| faz   | CREATE TABLE `faz` (
+  `Estado` varchar(10) NOT NULL,
+  `matricula` int NOT NULL,
+  `Cod` int NOT NULL,
+  PRIMARY KEY (`matricula`,`Cod`),
+  KEY `Cod` (`Cod`),
+  CONSTRAINT `faz_ibfk_1` FOREIGN KEY (`matricula`) REFERENCES `Aluno` (`matricula`),
+  CONSTRAINT `faz_ibfk_2` FOREIGN KEY (`Cod`) REFERENCES `Disciplina` (`Cod`),
+  CONSTRAINT `faz_chk_1` CHECK (((`Estado` = _latin1'Cursando') or (`Estado` = _latin1'Concluido') or (`Estado` = _latin1'Trancado') or (`Estado` = _latin1'Reprovado')))
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci |
++-------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+1 row in set (0.001 sec)
+
+mysql> INSERT INTO Faz (Cod, matricula, Estado) VALUES
+    -> (101, 123456789, 'Concluido'),
+    -> (102, 123456789, 'Concluido'),
+    -> (103, 123456789, 'Concluido'),
+    -> (201, 123456789, 'Concluido'),
+    -> (202, 123456789, 'Cursando'),
+    -> (203, 123456789, 'Cursando'),
+    -> (301, 123456789, 'Trancado'),
+    -> (302, 123456789, 'Cursando');
+Query OK, 8 rows affected (0.004 sec)
+Records: 8  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM faz;
++-----------+-----------+-----+
+| Estado    | matricula | Cod |
++-----------+-----------+-----+
+| Concluido | 123456789 | 101 |
+| Concluido | 123456789 | 102 |
+| Concluido | 123456789 | 103 |
+| Concluido | 123456789 | 201 |
+| Cursando  | 123456789 | 202 |
+| Cursando  | 123456789 | 203 |
+| Trancado  | 123456789 | 301 |
+| Cursando  | 123456789 | 302 |
++-----------+-----------+-----+
+8 rows in set (0.001 sec)
+
+mysql> SELECT D.nome, P.nome FROM Disciplina INNER JOIN Professor;
+ERROR 1054 (42S22): Unknown column 'D.nome' in 'field list'
+mysql> SELECT D.nome, P.nome FROM Disciplina D INNER JOIN Professor P;
++-------------------------------+----------------------+
+| nome                          | nome                 |
++-------------------------------+----------------------+
+| Matemtica I                   | Mariana Goncalves    |
+| Matemtica I                   | Joao Pedro Almeida   |
+| Matemtica I                   | Fernanda Costa       |
+| Matemtica I                   | Carlos Eduardo Silva |
+| Matemtica I                   | Maria Luz            |
+| Introduo  Programao           | Mariana Goncalves    |
+| Introduo  Programao           | Joao Pedro Almeida   |
+| Introduo  Programao           | Fernanda Costa       |
+| Introduo  Programao           | Carlos Eduardo Silva |
+| Introduo  Programao           | Maria Luz            |
+| Fsica I                       | Mariana Goncalves    |
+| Fsica I                       | Joao Pedro Almeida   |
+| Fsica I                       | Fernanda Costa       |
+| Fsica I                       | Carlos Eduardo Silva |
+| Fsica I                       | Maria Luz            |
+| Algoritmos                    | Mariana Goncalves    |
+| Algoritmos                    | Joao Pedro Almeida   |
+| Algoritmos                    | Fernanda Costa       |
+| Algoritmos                    | Carlos Eduardo Silva |
+| Algoritmos                    | Maria Luz            |
+| Estruturas de Dados           | Mariana Goncalves    |
+| Estruturas de Dados           | Joao Pedro Almeida   |
+| Estruturas de Dados           | Fernanda Costa       |
+| Estruturas de Dados           | Carlos Eduardo Silva |
+| Estruturas de Dados           | Maria Luz            |
+| Matemtica II                  | Mariana Goncalves    |
+| Matemtica II                  | Joao Pedro Almeida   |
+| Matemtica II                  | Fernanda Costa       |
+| Matemtica II                  | Carlos Eduardo Silva |
+| Matemtica II                  | Maria Luz            |
+| Banco de Dados                | Mariana Goncalves    |
+| Banco de Dados                | Joao Pedro Almeida   |
+| Banco de Dados                | Fernanda Costa       |
+| Banco de Dados                | Carlos Eduardo Silva |
+| Banco de Dados                | Maria Luz            |
+| Redes de Computadores         | Mariana Goncalves    |
+| Redes de Computadores         | Joao Pedro Almeida   |
+| Redes de Computadores         | Fernanda Costa       |
+| Redes de Computadores         | Carlos Eduardo Silva |
+| Redes de Computadores         | Maria Luz            |
+| Sistemas Operacionais         | Mariana Goncalves    |
+| Sistemas Operacionais         | Joao Pedro Almeida   |
+| Sistemas Operacionais         | Fernanda Costa       |
+| Sistemas Operacionais         | Carlos Eduardo Silva |
+| Sistemas Operacionais         | Maria Luz            |
+| Programao Orientada a Objetos | Mariana Goncalves    |
+| Programao Orientada a Objetos | Joao Pedro Almeida   |
+| Programao Orientada a Objetos | Fernanda Costa       |
+| Programao Orientada a Objetos | Carlos Eduardo Silva |
+| Programao Orientada a Objetos | Maria Luz            |
+| Engenharia de Software        | Mariana Goncalves    |
+| Engenharia de Software        | Joao Pedro Almeida   |
+| Engenharia de Software        | Fernanda Costa       |
+| Engenharia de Software        | Carlos Eduardo Silva |
+| Engenharia de Software        | Maria Luz            |
+| Segurana da Informao          | Mariana Goncalves    |
+| Segurana da Informao          | Joao Pedro Almeida   |
+| Segurana da Informao          | Fernanda Costa       |
+| Segurana da Informao          | Carlos Eduardo Silva |
+| Segurana da Informao          | Maria Luz            |
+| Inteligncia Artificial        | Mariana Goncalves    |
+| Inteligncia Artificial        | Joao Pedro Almeida   |
+| Inteligncia Artificial        | Fernanda Costa       |
+| Inteligncia Artificial        | Carlos Eduardo Silva |
+| Inteligncia Artificial        | Maria Luz            |
+| Computao em Nuvem             | Mariana Goncalves    |
+| Computao em Nuvem             | Joao Pedro Almeida   |
+| Computao em Nuvem             | Fernanda Costa       |
+| Computao em Nuvem             | Carlos Eduardo Silva |
+| Computao em Nuvem             | Maria Luz            |
+| Projeto de Sistemas           | Mariana Goncalves    |
+| Projeto de Sistemas           | Joao Pedro Almeida   |
+| Projeto de Sistemas           | Fernanda Costa       |
+| Projeto de Sistemas           | Carlos Eduardo Silva |
+| Projeto de Sistemas           | Maria Luz            |
++-------------------------------+----------------------+
+75 rows in set (0.001 sec)
+
+mysql> SELECT D.nome, P.nome FROM Disciplina D JOIN Professor P;
++-------------------------------+----------------------+
+| nome                          | nome                 |
++-------------------------------+----------------------+
+| Matemtica I                   | Mariana Goncalves    |
+| Matemtica I                   | Joao Pedro Almeida   |
+| Matemtica I                   | Fernanda Costa       |
+| Matemtica I                   | Carlos Eduardo Silva |
+| Matemtica I                   | Maria Luz            |
+| Introduo  Programao           | Mariana Goncalves    |
+| Introduo  Programao           | Joao Pedro Almeida   |
+| Introduo  Programao           | Fernanda Costa       |
+| Introduo  Programao           | Carlos Eduardo Silva |
+| Introduo  Programao           | Maria Luz            |
+| Fsica I                       | Mariana Goncalves    |
+| Fsica I                       | Joao Pedro Almeida   |
+| Fsica I                       | Fernanda Costa       |
+| Fsica I                       | Carlos Eduardo Silva |
+| Fsica I                       | Maria Luz            |
+| Algoritmos                    | Mariana Goncalves    |
+| Algoritmos                    | Joao Pedro Almeida   |
+| Algoritmos                    | Fernanda Costa       |
+| Algoritmos                    | Carlos Eduardo Silva |
+| Algoritmos                    | Maria Luz            |
+| Estruturas de Dados           | Mariana Goncalves    |
+| Estruturas de Dados           | Joao Pedro Almeida   |
+| Estruturas de Dados           | Fernanda Costa       |
+| Estruturas de Dados           | Carlos Eduardo Silva |
+| Estruturas de Dados           | Maria Luz            |
+| Matemtica II                  | Mariana Goncalves    |
+| Matemtica II                  | Joao Pedro Almeida   |
+| Matemtica II                  | Fernanda Costa       |
+| Matemtica II                  | Carlos Eduardo Silva |
+| Matemtica II                  | Maria Luz            |
+| Banco de Dados                | Mariana Goncalves    |
+| Banco de Dados                | Joao Pedro Almeida   |
+| Banco de Dados                | Fernanda Costa       |
+| Banco de Dados                | Carlos Eduardo Silva |
+| Banco de Dados                | Maria Luz            |
+| Redes de Computadores         | Mariana Goncalves    |
+| Redes de Computadores         | Joao Pedro Almeida   |
+| Redes de Computadores         | Fernanda Costa       |
+| Redes de Computadores         | Carlos Eduardo Silva |
+| Redes de Computadores         | Maria Luz            |
+| Sistemas Operacionais         | Mariana Goncalves    |
+| Sistemas Operacionais         | Joao Pedro Almeida   |
+| Sistemas Operacionais         | Fernanda Costa       |
+| Sistemas Operacionais         | Carlos Eduardo Silva |
+| Sistemas Operacionais         | Maria Luz            |
+| Programao Orientada a Objetos | Mariana Goncalves    |
+| Programao Orientada a Objetos | Joao Pedro Almeida   |
+| Programao Orientada a Objetos | Fernanda Costa       |
+| Programao Orientada a Objetos | Carlos Eduardo Silva |
+| Programao Orientada a Objetos | Maria Luz            |
+| Engenharia de Software        | Mariana Goncalves    |
+| Engenharia de Software        | Joao Pedro Almeida   |
+| Engenharia de Software        | Fernanda Costa       |
+| Engenharia de Software        | Carlos Eduardo Silva |
+| Engenharia de Software        | Maria Luz            |
+| Segurana da Informao          | Mariana Goncalves    |
+| Segurana da Informao          | Joao Pedro Almeida   |
+| Segurana da Informao          | Fernanda Costa       |
+| Segurana da Informao          | Carlos Eduardo Silva |
+| Segurana da Informao          | Maria Luz            |
+| Inteligncia Artificial        | Mariana Goncalves    |
+| Inteligncia Artificial        | Joao Pedro Almeida   |
+| Inteligncia Artificial        | Fernanda Costa       |
+| Inteligncia Artificial        | Carlos Eduardo Silva |
+| Inteligncia Artificial        | Maria Luz            |
+| Computao em Nuvem             | Mariana Goncalves    |
+| Computao em Nuvem             | Joao Pedro Almeida   |
+| Computao em Nuvem             | Fernanda Costa       |
+| Computao em Nuvem             | Carlos Eduardo Silva |
+| Computao em Nuvem             | Maria Luz            |
+| Projeto de Sistemas           | Mariana Goncalves    |
+| Projeto de Sistemas           | Joao Pedro Almeida   |
+| Projeto de Sistemas           | Fernanda Costa       |
+| Projeto de Sistemas           | Carlos Eduardo Silva |
+| Projeto de Sistemas           | Maria Luz            |
++-------------------------------+----------------------+
+75 rows in set (0.000 sec)
+
+mysql> SELECT D.nome, P.nome FROM Disciplina D INNER JOIN Professor P ON D.SIAPE = P.SIAPE;
++-------------------------------+----------------------+
+| nome                          | nome                 |
++-------------------------------+----------------------+
+| Matemtica I                   | Maria Luz            |
+| Matemtica II                  | Maria Luz            |
+| Inteligncia Artificial        | Maria Luz            |
+| Introduo  Programao           | Carlos Eduardo Silva |
+| Algoritmos                    | Carlos Eduardo Silva |
+| Programao Orientada a Objetos | Carlos Eduardo Silva |
+| Fsica I                       | Fernanda Costa       |
+| Redes de Computadores         | Fernanda Costa       |
+| Segurana da Informao          | Fernanda Costa       |
+| Estruturas de Dados           | Joao Pedro Almeida   |
+| Sistemas Operacionais         | Joao Pedro Almeida   |
+| Projeto de Sistemas           | Joao Pedro Almeida   |
+| Banco de Dados                | Mariana Goncalves    |
+| Engenharia de Software        | Mariana Goncalves    |
+| Computao em Nuvem             | Mariana Goncalves    |
++-------------------------------+----------------------+
+15 rows in set (0.001 sec)
+
+mysql> SELECT D.nome FROM faz F INNER JOIN Disciplina D ON D.Cod = F.Cod WHERE f.matricula = 123456789 AND f.Estado = 'Cursando';
++-----------------------+
+| nome                  |
++-----------------------+
+| Estruturas de Dados   |
+| Matemtica II          |
+| Redes de Computadores |
++-----------------------+
+3 rows in set (0.001 sec)
+
+mysql> SELECT D.nome, D.semestre, F.Estado FROM Disciplina D INNER JOIN faz F ON D.Cod = F.Cod WHERE F.matricula = 123456789;
++-----------------------+----------+-----------+
+| nome                  | semestre | Estado    |
++-----------------------+----------+-----------+
+| Matemtica I           |        1 | Concluido |
+| Introduo  Programao   |        1 | Concluido |
+| Fsica I               |        1 | Concluido |
+| Algoritmos            |        2 | Concluido |
+| Estruturas de Dados   |        2 | Cursando  |
+| Matemtica II          |        2 | Cursando  |
+| Banco de Dados        |        3 | Trancado  |
+| Redes de Computadores |        3 | Cursando  |
++-----------------------+----------+-----------+
+8 rows in set (0.001 sec)
+
+mysql> SELECT Nome, CargaHoraria FROM Disciplina WHERE CargaHoraria > 70;
++-------------------------------+--------------+
+| Nome                          | CargaHoraria |
++-------------------------------+--------------+
+| Introduo  Programao           |           80 |
+| Algoritmos                    |           80 |
+| Estruturas de Dados           |           80 |
+| Banco de Dados                |           80 |
+| Sistemas Operacionais         |           80 |
+| Programao Orientada a Objetos |           80 |
+| Computao em Nuvem             |           80 |
+| Projeto de Sistemas           |           80 |
++-------------------------------+--------------+
+8 rows in set (0.000 sec)
+
+mysql> SELECT D.nome FROM Disciplina D INNER JOIN PreRequisito P ON D.Cod = P.Cod WHERE NOT D.Cod = P.Cod;
+Empty set (0.001 sec)
+
+mysql> SELECT D.nome FROM Disciplina D INNER JOIN PreRequisito P ON D.Cod = P.Cod;
++-------------------------------+
+| nome                          |
++-------------------------------+
+| Matemtica II                  |
+| Algoritmos                    |
+| Redes de Computadores         |
+| Programao Orientada a Objetos |
+| Banco de Dados                |
+| Sistemas Operacionais         |
+| Programao Orientada a Objetos |
+| Inteligncia Artificial        |
+| Computao em Nuvem             |
+| Segurana da Informao          |
+| Projeto de Sistemas           |
+| Inteligncia Artificial        |
+| Projeto de Sistemas           |
++-------------------------------+
+13 rows in set (0.000 sec)
+
+mysql> SELECT D.nome FROM Disciplina D LEFT JOIN PreRequisito P ON D.Cod = P.Cod;
++-------------------------------+
+| nome                          |
++-------------------------------+
+| Matemtica I                   |
+| Introduo  Programao           |
+| Fsica I                       |
+| Algoritmos                    |
+| Estruturas de Dados           |
+| Matemtica II                  |
+| Banco de Dados                |
+| Redes de Computadores         |
+| Sistemas Operacionais         |
+| Programao Orientada a Objetos |
+| Programao Orientada a Objetos |
+| Engenharia de Software        |
+| Segurana da Informao          |
+| Inteligncia Artificial        |
+| Inteligncia Artificial        |
+| Computao em Nuvem             |
+| Projeto de Sistemas           |
+| Projeto de Sistemas           |
++-------------------------------+
+18 rows in set (0.001 sec)
+
+mysql> SELECT D.nome FROM Disciplina D INNER JOIN PreRequisito P ON D.Cod <> P.Cod;
++-------------------------------+
+| nome                          |
++-------------------------------+
+| Matemtica I                   |
+| Matemtica I                   |
+| Matemtica I                   |
+| Matemtica I                   |
+| Matemtica I                   |
+| Matemtica I                   |
+| Matemtica I                   |
+| Matemtica I                   |
+| Matemtica I                   |
+| Matemtica I                   |
+| Matemtica I                   |
+| Matemtica I                   |
+| Matemtica I                   |
+| Introduo  Programao           |
+| Introduo  Programao           |
+| Introduo  Programao           |
+| Introduo  Programao           |
+| Introduo  Programao           |
+| Introduo  Programao           |
+| Introduo  Programao           |
+| Introduo  Programao           |
+| Introduo  Programao           |
+| Introduo  Programao           |
+| Introduo  Programao           |
+| Introduo  Programao           |
+| Introduo  Programao           |
+| Fsica I                       |
+| Fsica I                       |
+| Fsica I                       |
+| Fsica I                       |
+| Fsica I                       |
+| Fsica I                       |
+| Fsica I                       |
+| Fsica I                       |
+| Fsica I                       |
+| Fsica I                       |
+| Fsica I                       |
+| Fsica I                       |
+| Fsica I                       |
+| Algoritmos                    |
+| Algoritmos                    |
+| Algoritmos                    |
+| Algoritmos                    |
+| Algoritmos                    |
+| Algoritmos                    |
+| Algoritmos                    |
+| Algoritmos                    |
+| Algoritmos                    |
+| Algoritmos                    |
+| Algoritmos                    |
+| Algoritmos                    |
+| Estruturas de Dados           |
+| Estruturas de Dados           |
+| Estruturas de Dados           |
+| Estruturas de Dados           |
+| Estruturas de Dados           |
+| Estruturas de Dados           |
+| Estruturas de Dados           |
+| Estruturas de Dados           |
+| Estruturas de Dados           |
+| Estruturas de Dados           |
+| Estruturas de Dados           |
+| Estruturas de Dados           |
+| Estruturas de Dados           |
+| Matemtica II                  |
+| Matemtica II                  |
+| Matemtica II                  |
+| Matemtica II                  |
+| Matemtica II                  |
+| Matemtica II                  |
+| Matemtica II                  |
+| Matemtica II                  |
+| Matemtica II                  |
+| Matemtica II                  |
+| Matemtica II                  |
+| Matemtica II                  |
+| Banco de Dados                |
+| Banco de Dados                |
+| Banco de Dados                |
+| Banco de Dados                |
+| Banco de Dados                |
+| Banco de Dados                |
+| Banco de Dados                |
+| Banco de Dados                |
+| Banco de Dados                |
+| Banco de Dados                |
+| Banco de Dados                |
+| Banco de Dados                |
+| Redes de Computadores         |
+| Redes de Computadores         |
+| Redes de Computadores         |
+| Redes de Computadores         |
+| Redes de Computadores         |
+| Redes de Computadores         |
+| Redes de Computadores         |
+| Redes de Computadores         |
+| Redes de Computadores         |
+| Redes de Computadores         |
+| Redes de Computadores         |
+| Redes de Computadores         |
+| Sistemas Operacionais         |
+| Sistemas Operacionais         |
+| Sistemas Operacionais         |
+| Sistemas Operacionais         |
+| Sistemas Operacionais         |
+| Sistemas Operacionais         |
+| Sistemas Operacionais         |
+| Sistemas Operacionais         |
+| Sistemas Operacionais         |
+| Sistemas Operacionais         |
+| Sistemas Operacionais         |
+| Sistemas Operacionais         |
+| Programao Orientada a Objetos |
+| Programao Orientada a Objetos |
+| Programao Orientada a Objetos |
+| Programao Orientada a Objetos |
+| Programao Orientada a Objetos |
+| Programao Orientada a Objetos |
+| Programao Orientada a Objetos |
+| Programao Orientada a Objetos |
+| Programao Orientada a Objetos |
+| Programao Orientada a Objetos |
+| Programao Orientada a Objetos |
+| Engenharia de Software        |
+| Engenharia de Software        |
+| Engenharia de Software        |
+| Engenharia de Software        |
+| Engenharia de Software        |
+| Engenharia de Software        |
+| Engenharia de Software        |
+| Engenharia de Software        |
+| Engenharia de Software        |
+| Engenharia de Software        |
+| Engenharia de Software        |
+| Engenharia de Software        |
+| Engenharia de Software        |
+| Segurana da Informao          |
+| Segurana da Informao          |
+| Segurana da Informao          |
+| Segurana da Informao          |
+| Segurana da Informao          |
+| Segurana da Informao          |
+| Segurana da Informao          |
+| Segurana da Informao          |
+| Segurana da Informao          |
+| Segurana da Informao          |
+| Segurana da Informao          |
+| Segurana da Informao          |
+| Inteligncia Artificial        |
+| Inteligncia Artificial        |
+| Inteligncia Artificial        |
+| Inteligncia Artificial        |
+| Inteligncia Artificial        |
+| Inteligncia Artificial        |
+| Inteligncia Artificial        |
+| Inteligncia Artificial        |
+| Inteligncia Artificial        |
+| Inteligncia Artificial        |
+| Inteligncia Artificial        |
+| Computao em Nuvem             |
+| Computao em Nuvem             |
+| Computao em Nuvem             |
+| Computao em Nuvem             |
+| Computao em Nuvem             |
+| Computao em Nuvem             |
+| Computao em Nuvem             |
+| Computao em Nuvem             |
+| Computao em Nuvem             |
+| Computao em Nuvem             |
+| Computao em Nuvem             |
+| Computao em Nuvem             |
+| Projeto de Sistemas           |
+| Projeto de Sistemas           |
+| Projeto de Sistemas           |
+| Projeto de Sistemas           |
+| Projeto de Sistemas           |
+| Projeto de Sistemas           |
+| Projeto de Sistemas           |
+| Projeto de Sistemas           |
+| Projeto de Sistemas           |
+| Projeto de Sistemas           |
+| Projeto de Sistemas           |
++-------------------------------+
+182 rows in set (0.000 sec)
+
+mysql> SELECT D.nome FROM Disciplina D INNER JOIN PreRequisito P ON D.Cod = P.Cod;
++-------------------------------+
+| nome                          |
++-------------------------------+
+| Matemtica II                  |
+| Algoritmos                    |
+| Redes de Computadores         |
+| Programao Orientada a Objetos |
+| Banco de Dados                |
+| Sistemas Operacionais         |
+| Programao Orientada a Objetos |
+| Inteligncia Artificial        |
+| Computao em Nuvem             |
+| Segurana da Informao          |
+| Projeto de Sistemas           |
+| Inteligncia Artificial        |
+| Projeto de Sistemas           |
++-------------------------------+
+13 rows in set (0.000 sec)
+
+mysql> SELECT Nome FROM Disciplina WHERE Cod NOT IN (SELECT Cod FROM PreRequisito);
++------------------------+
+| Nome                   |
++------------------------+
+| Matemtica I            |
+| Introduo  Programao    |
+| Fsica I                |
+| Estruturas de Dados    |
+| Engenharia de Software |
++------------------------+
+5 rows in set (0.001 sec)
+
+mysql> SELECT Nome
+    -> CASE
+    -> WHEN CargaHoraria > 70 THEN 'Alta'
+    -> WHEN CargaHoraria = 60 THEN 'Media'
+    -> ELSE 'Baixa'
+    -> END AS NivelCargaHoraria
+    -> FROM Disciplina;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'CASE
+WHEN CargaHoraria > 70 THEN 'Alta'
+WHEN CargaHoraria = 60 THEN 'Media'
+ELSE' at line 2
+mysql> SELECT Nome, CargaHoraria CASE WHEN CargaHoraria > 70 THEN 'Alta' WHEN CargaHoraria = 60 THEN 'Media' ELSE 'Baixa' END AS NivelCargaHoraria FROM Disciplina;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'CASE WHEN CargaHoraria > 70 THEN 'Alta' WHEN CargaHoraria = 60 THEN 'Media' ELSE' at line 1
+mysql> SELECT Nome FROM Disciplina CASE WHEN CargaHoraria > 70 THEN 'Alta' WHEN CargaHoraria = 60 THEN 'Media' ELSE 'Baixa' END AS NivelCargaHoraria;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'CASE WHEN CargaHoraria > 70 THEN 'Alta' WHEN CargaHoraria = 60 THEN 'Media' ELSE' at line 1
+mysql> SELECT Nome FROM Disciplina CASE WHEN CargaHoraria > 70 THEN 'Alta' WHEN CargaHoraria => 60 THEN 'Media' ELSE 'Baixa' END AS NivelCargaHoraria;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'CASE WHEN CargaHoraria > 70 THEN 'Alta' WHEN CargaHoraria => 60 THEN 'Media' ELS' at line 1
+mysql> SELECT Nome, CASE WHEN CargaHoraria > 70 THEN 'Alta' WHEN CargaHoraria => 60 THEN 'Media' ELSE 'Baixa' END AS NivelCargaHorariaFROM Disciplina;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '=> 60 THEN 'Media' ELSE 'Baixa' END AS NivelCargaHorariaFROM Disciplina' at line 1
+mysql> SELECT Nome, CASE WHEN CargaHoraria>70 THEN 'Alta' WHEN CargaHoraria=60 THEN 'Media' ELSE 'Baixa' END NivelCargaHorariaFROM Disciplina;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'Disciplina' at line 1
+mysql> SELECT Nome, CASE WHEN CargaHoraria>70 THEN 'Alta' WHEN CargaHoraria=60 THEN 'Media' ELSE 'Baixa' END NivelCargaHoraria FROM Disciplina;
++-------------------------------+-------------------+
+| Nome                          | NivelCargaHoraria |
++-------------------------------+-------------------+
+| Matemtica I                   | Media             |
+| Introduo  Programao           | Alta              |
+| Fsica I                       | Media             |
+| Algoritmos                    | Alta              |
+| Estruturas de Dados           | Alta              |
+| Matemtica II                  | Media             |
+| Banco de Dados                | Alta              |
+| Redes de Computadores         | Media             |
+| Sistemas Operacionais         | Alta              |
+| Programao Orientada a Objetos | Alta              |
+| Engenharia de Software        | Media             |
+| Segurana da Informao          | Media             |
+| Inteligncia Artificial        | Media             |
+| Computao em Nuvem             | Alta              |
+| Projeto de Sistemas           | Alta              |
++-------------------------------+-------------------+
+15 rows in set (0.001 sec)
+
+mysql> SELECT Nome CASE WHEN CargaHoraria>70 THEN 'Alta' WHEN CargaHoraria=60 THEN 'Media' ELSE 'Baixa' END NivelCargaHoraria FROM Disciplina;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'CASE WHEN CargaHoraria>70 THEN 'Alta' WHEN CargaHoraria=60 THEN 'Media' ELSE 'Ba' at line 1
+mysql> SELECT Nome FROM Disciplina CASE WHEN CargaHoraria>70 THEN 'Alta' WHEN CargaHoraria=60 THEN 'Media' ELSE 'Baixa' END NivelCargaHoraria;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'CASE WHEN CargaHoraria>70 THEN 'Alta' WHEN CargaHoraria=60 THEN 'Media' ELSE 'Ba' at line 1
+mysql> SELECT Nome, CASE WHEN CargaHoraria>70 THEN 'Alta' WHEN CargaHoraria=60 THEN 'Media' ELSE 'Baixa' END NivelCargaHoraria FROM Disciplina;
++-------------------------------+-------------------+
+| Nome                          | NivelCargaHoraria |
++-------------------------------+-------------------+
+| Matemtica I                   | Media             |
+| Introduo  Programao           | Alta              |
+| Fsica I                       | Media             |
+| Algoritmos                    | Alta              |
+| Estruturas de Dados           | Alta              |
+| Matemtica II                  | Media             |
+| Banco de Dados                | Alta              |
+| Redes de Computadores         | Media             |
+| Sistemas Operacionais         | Alta              |
+| Programao Orientada a Objetos | Alta              |
+| Engenharia de Software        | Media             |
+| Segurana da Informao          | Media             |
+| Inteligncia Artificial        | Media             |
+| Computao em Nuvem             | Alta              |
+| Projeto de Sistemas           | Alta              |
++-------------------------------+-------------------+
+15 rows in set (0.000 sec)
+
+mysql> SELECT D.nome, CASE WHEN Estado = 'Concluido' THEN 'Ok' WHEN Estado = 'Cursando' THEN 'Em andamento' WHEN Estado = 'Trancado' THEN 'Pausado' FROM Disciplina D INNER JOIN faz;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'FROM Disciplina D INNER JOIN faz' at line 1
+mysql> SELECT D.nome, CASE WHEN F.Estado = 'Concluido' THEN 'Ok' WHEN F.Estado = 'Cursando' THEN 'Em andamento' WHEN F.Estado = 'Trancado' THEN 'Pausado' FROM Disciplina D INNER JOIN faz F;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'FROM Disciplina D INNER JOIN faz F' at line 1
+mysql> SELECT D.nome, CASE WHEN F.Estado = 'Concluido' THEN 'Ok' WHEN F.Estado = 'Cursando' THEN 'Em andamento' WHEN F.Estado = 'Trancado' THEN 'Pausado' FROM Disciplina D INNER JOIN faz F ON D.Cod = F.Cod;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'FROM Disciplina D INNER JOIN faz F ON D.Cod = F.Cod' at line 1
+mysql> SELECT D.nome, CASE WHEN F.Estado = 'Concluido' THEN 'Ok' WHEN F.Estado = 'Cursando' THEN 'Em andamento' WHEN F.Estado = 'Trancado' THEN 'Pausado' FROM Disciplina;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'FROM Disciplina' at line 1
+mysql> SELECT D.nome, CASE WHEN F.Estado = 'Concluido' THEN 'Ok' WHEN F.Estado = 'Cursando' THEN 'Em andamento' WHEN F.Estado = 'Trancado' THEN 'Pausado' FROM Disciplina D JOIN faz F ON D.Cod = F.Cod;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'FROM Disciplina D JOIN faz F ON D.Cod = F.Cod' at line 1
+mysql> SELECT D.Nome, CASE WHEN F.Estado = 'Concluido' THEN 'Ok' WHEN F.Estado = 'Cursando' THEN 'Em andamento' WHEN F.Estado = 'Trancado' THEN 'Pausado' END Situacao FROM Disciplina D JOIN faz F ON D.Cod = F.Cod;
++-----------------------+--------------+
+| Nome                  | Situacao     |
++-----------------------+--------------+
+| Matemtica I           | Ok           |
+| Introduo  Programao   | Ok           |
+| Fsica I               | Ok           |
+| Algoritmos            | Ok           |
+| Estruturas de Dados   | Em andamento |
+| Matemtica II          | Em andamento |
+| Banco de Dados        | Pausado      |
+| Redes de Computadores | Em andamento |
++-----------------------+--------------+
+8 rows in set (0.001 sec)
+
+mysql> notee;
